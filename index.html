@@ -1,3 +1,194 @@
+Gemini
+Sistem Pengaduan Kerusakan Sekolah Web
+Conversation with Gemini
+aku punya laporan kerusakan di sekolah seperti ini, tapi menurut aku itu masih terpisah di banyak sheet jadi tidak bisa melihat sekaligus. apakah kamu bisa membuatkan aku web statis untuk membuat laporan pengaduan denga format yang sama atau lebih baik dari spreadsheets yang aku buat? buatkan gambarannya dulu ya
+
+Wah, datanya sudah sangat rapi! Sebagai pengelola sistem di sekolah, memantau tiga kategori berbeda (AC, LCD, dan Sarana/Kerusakan Umum) memang melelahkan kalau harus klik pindah-pindah sheet.
+
+Memindahkan ini ke Web Statis adalah ide cemerlang. Keuntungannya adalah tampilan bisa dibuat lebih ringkas, ada dashboard untuk melihat status secara instan (Berapa yang sudah diperbaiki vs belum), dan pengisiannya bisa dibuat lebih user-friendly melalui form.
+
+Berikut adalah gambaran konsep web sistem pengaduan yang bisa kita buat:
+
+1. Struktur Dashboard Utama
+Alih-alih terpisah jauh, kita gunakan Sistem Tab atau Filter Kategori di satu halaman utama.
+
+Header Dashboard: Menampilkan "Counter" cepat.
+
+Total Laporan: 20
+
+Selesai: 12
+
+Proses/Belum: 8
+
+Filter Cepat: Tombol [Semua] [AC] [LCD] [Umum] agar data langsung tersaring tanpa reload halaman.
+
+2. Form Pengaduan yang Lebih Baik
+Di spreadsheet, mengisi manual kadang rawan salah ketik. Di web, kita buat form dengan:
+
+Dropdown Otomatis: Untuk Kampus (Kampus 1/2) dan Kelas, jadi pelapor tinggal pilih.
+
+Upload Bukti: Menambahkan fitur unggah foto langsung dari HP (ini yang sulit dilakukan di spreadsheet biasa).
+
+Penanda Lokasi: Pilihan spesifik seperti "AC Depan" atau "AC Belakang" cukup klik checkbox.
+
+3. Tampilan Tabel Data (Status Visual)
+Kita bisa menggunakan warna untuk menandai urgensi atau status:
+
+Hijau: Selesai dikerjakan.
+
+Kuning: Sudah disampaikan ke teknisi (Sedang Reparasi).
+
+Merah: Laporan baru (Belum disentuh).
+
+Gambaran Arsitektur Teknis (Rekomendasi)
+Karena Anda menginginkan Web Statis, saya menyarankan kombinasi berikut agar data tetap bisa tersimpan tanpa perlu sewa database mahal:
+
+Komponen	Teknologi	Fungsi
+Frontend	Tailwind CSS	Membuat tampilan modern, responsif (bisa dibuka di HP guru), dan "Candy Pop" sesuai selera Anda.
+Penyimpanan	Google Sheets API / AppScript	Web statis mengirim data ke Spreadsheet Anda yang sekarang. Jadi Anda punya web keren, tapi datanya tetap aman di Google Drive.
+Interaksi	Alpine.js atau React	Untuk fitur filter data secara instan tanpa perlu pindah halaman.
+Alur Kerja yang Diusulkan:
+Halaman Input: Guru/Staf scan QR Code di kelas -> Masuk ke Web -> Isi laporan + Foto.
+
+Halaman Admin: Anda membuka dashboard -> Melihat daftar kerusakan terbaru -> Klik "Update Status" jika sudah diperbaiki.
+
+Apakah Anda ingin saya mulai buatkan kode boilerplate (kerangka dasar) menggunakan HTML dan Tailwind CSS untuk tampilan Dashboard-nya? Kita bisa mulai dari desain tabel yang menyatukan ketiga kategori tersebut.
+
+Alur Kerja yang Diusulkan:
+
+Halaman Input: Guru/Staf Masuk ke Web -> Isi laporan + Foto.
+
+Halaman Admin: Anda membuka dashboard -> Melihat daftar kerusakan terbaru -> Klik "Update Status" jika sudah diperbaiki.
+
+Siap! Sesuai alur kerja tersebut, saya akan buatkan kerangka web statis menggunakan Tailwind CSS. Kita akan membuat desain yang menyatukan laporan AC, LCD, dan Kerusakan Sekolah ke dalam satu tampilan yang bersih namun tetap fungsional.
+
+Berikut adalah kode dasar (boilerplate) untuk Dashboard Admin. Desain ini sudah responsif, jadi Anda bisa memantau kerusakan langsung dari smartphone saat sedang berkeliling kampus.
+
+1. Struktur Kode (HTML + Tailwind CSS)
+HTML
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Pengaduan Sarana Sekolah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 font-sans">
+
+    <nav class="bg-indigo-600 p-4 text-white shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-bold tracking-tight"><i class="fas fa-tools mr-2"></i> SARPRAS CARE</h1>
+            <div class="space-x-4">
+                <button class="bg-white text-indigo-600 px-4 py-2 rounded-lg font-medium text-sm hover:bg-indigo-50 transition">
+                    <i class="fas fa-plus mr-1"></i> Lapor Baru
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto p-4 md:p-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-red-500">
+                <p class="text-gray-500 text-sm font-medium">Belum Dikerjakan</p>
+                <h2 class="text-3xl font-bold text-gray-800">08</h2>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-yellow-500">
+                <p class="text-gray-500 text-sm font-medium">Proses Reparasi</p>
+                <h2 class="text-3xl font-bold text-gray-800">03</h2>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-green-500">
+                <p class="text-gray-500 text-sm font-medium">Selesai</p>
+                <h2 class="text-3xl font-bold text-gray-800">12</h2>
+            </div>
+        </div>
+
+        <div class="flex space-x-2 mb-6 overflow-x-auto pb-2">
+            <button class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap">Semua Kategori</button>
+            <button class="bg-white border text-gray-600 px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-50 whitespace-nowrap">AC</button>
+            <button class="bg-white border text-gray-600 px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-50 whitespace-nowrap">LCD Projector</button>
+            <button class="bg-white border text-gray-600 px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-50 whitespace-nowrap">Fasilitas Umum</button>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-sm overflow-hidden border">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-gray-50 text-gray-600 uppercase text-xs font-bold">
+                        <tr>
+                            <th class="px-6 py-4">Item / Lokasi</th>
+                            <th class="px-6 py-4">Keluhan</th>
+                            <th class="px-6 py-4">Waktu Lapor</th>
+                            <th class="px-6 py-4">Status</th>
+                            <th class="px-6 py-4 text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr class="hover:bg-gray-50 transition">
+                            <td class="px-6 py-4">
+                                <span class="block font-bold text-gray-800">AC Depan - XII 7</span>
+                                <span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded">Kampus 2</span>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-600 italic">"Bocor air merembes ke tembok"</td>
+                            <td class="px-6 py-4 text-sm text-gray-500">14 Jan 2026</td>
+                            <td class="px-6 py-4">
+                                <span class="bg-green-100 text-green-700 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Selesai</span>
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <button class="text-indigo-600 hover:text-indigo-900 font-medium text-sm">Detail</button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 transition">
+                            <td class="px-6 py-4">
+                                <span class="block font-bold text-gray-800">LCD - XI 10</span>
+                                <span class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded">Kampus 1</span>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-600 italic">"Warna tampilan menguning"</td>
+                            <td class="px-6 py-4 text-sm text-gray-500">15 Jan 2026</td>
+                            <td class="px-6 py-4">
+                                <span class="bg-red-100 text-red-700 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Belum</span>
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <button class="text-indigo-600 hover:text-indigo-900 font-medium text-sm">Update</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
+Keunggulan dari Format Spreadsheet Sebelumnya:
+Identitas Visual: Setiap kategori punya label warna yang jelas (Kampus 1 merah, Kampus 2 ungu).
+
+Status Sekilas: Ada baris ringkasan di atas (Total Selesai/Belum) sehingga Anda tidak perlu menghitung manual lagi.
+
+Tombol Aksi: Di spreadsheet, Anda harus mengetik manual. Di sini, kita bisa buat tombol "Update" yang nanti akan memicu modal untuk merubah status secara instan.
+
+Mobile Friendly: Jika Anda membukanya di HP saat memeriksa kelas, tabel ini akan menyesuaikan ukurannya (tidak perlu geser kanan-kiri sejauh di spreadsheet).
+
+Langkah Selanjutnya:
+Apakah desain warna dan tata letaknya sudah sesuai dengan bayangan Anda?
+
+Jika sudah oke, saya bisa bantu buatkan Halaman Form Input untuk Guru agar mereka bisa kirim laporan lengkap dengan foto dari HP.
+
+Ingin saya bantu integrasikan agar data dari Web ini otomatis masuk ke Google Sheets Anda? (Menggunakan Google Apps Script).
+
+Bagaimana menurut Anda, bagian mana yang perlu kita pertajam terlebih dahulu?
+
+sudah oke. namun apakah kamu bisa menambahkan juga selain nama kelas ada nama ruangan, dan ada detail lantai mana gedung mana
+
+Tentu, itu ide bagus! Menambahkan Lantai dan Gedung akan sangat membantu teknisi agar tidak nyasar, terutama di sekolah dengan banyak bangunan.
+
+Saya telah memperbarui desainnya. Sekarang, setiap baris laporan memiliki informasi lokasi yang lebih spesifik, dan saya juga menambahkan Halaman Form Input untuk Guru agar mereka bisa memilih lokasi dengan detail tersebut.
+
+Berikut adalah pembaruan kodenya:
+
+1. Update Tabel Dashboard (Admin View)
+Saya menambahkan kolom Lokasi Spesifik agar Anda bisa melihat Lantai dan Gedung secara sekilas.
+
+HTML
 <div class="bg-white rounded-2xl shadow-sm overflow-hidden border">
     <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse">
@@ -33,3 +224,329 @@
         </table>
     </div>
 </div>
+2. Form Laporan (Guru View)
+Ini adalah gambaran form yang akan diisi oleh Guru/Staf. Saya menggunakan grid agar pemilihan lokasi (Gedung/Lantai) terlihat rapi.
+
+HTML
+<div class="max-w-2xl mx-auto bg-white p-8 rounded-3xl shadow-xl border border-gray-100 mt-10">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+        <i class="fas fa-paper-plane text-indigo-600 mr-3"></i> Buat Laporan Kerusakan
+    </h2>
+    
+    <form class="space-y-5">
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Kampus</label>
+                <select class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <option>Kampus 1</option>
+                    <option>Kampus 2</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Gedung</label>
+                <select class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <option>Gedung A (Utama)</option>
+                    <option>Gedung B (Lab)</option>
+                    <option>Gedung C (Sport Center)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Ruangan / Kelas</label>
+                <input type="text" placeholder="Contoh: XII TKJ 1 / Ruang Kepsek" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Lantai</label>
+                <select class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <option>Lantai 1</option>
+                    <option>Lantai 2</option>
+                    <option>Lantai 3</option>
+                </select>
+            </div>
+        </div>
+
+        <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Apa yang rusak?</label>
+            <textarea rows="3" placeholder="Ceritakan detail kerusakannya..." class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
+        </div>
+
+        <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Foto Bukti (Opsional)</label>
+            <div class="border-2 border-dashed border-gray-300 rounded-xl p-4 text-center hover:border-indigo-400 transition cursor-pointer">
+                <i class="fas fa-camera text-gray-400 text-2xl mb-2"></i>
+                <p class="text-xs text-gray-500">Klik untuk ambil foto atau pilih file</p>
+            </div>
+        </div>
+
+        <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-4 rounded-2xl shadow-lg hover:bg-indigo-700 transition">
+            Kirim Laporan Sekarang
+        </button>
+    </form>
+</div>
+Apa yang berubah?
+Struktur Lokasi Bertingkat: Sekarang informasi tidak menumpuk. Kita punya hirarki: Kampus > Gedung > Lantai > Ruangan.
+
+Keterbacaan Admin: Di tabel, info lokasi dibuat lebih kecil (text-xs) namun tetap lengkap agar fokus utama Anda tetap pada Keluhan dan Status.
+
+Kemudahan Guru: Dengan dropdown untuk Gedung dan Lantai, Guru tidak perlu mengetik panjang lebar, sehingga data yang masuk ke Anda lebih konsisten (tidak ada lagi typo nama gedung).
+
+Apakah Anda ingin saya lanjut membuatkan skrip otomatisasi (Google Apps Script) agar setiap kali tombol "Kirim Laporan" diklik, datanya langsung muncul di baris paling atas Spreadsheet Anda?
+
+ya
+
+Sesuai rencana kita, saya telah merancang sistem laporan yang lebih detail. Dengan tambahan kolom Gedung dan Lantai, Anda kini bisa memetakan kerusakan secara presisi (misalnya: Kampus 1 > Gedung A > Lantai 2 > Ruang Guru).
+
+Agar sistem ini bisa langsung berjalan, saya sudah menyiapkan panduan teknis dan skrip otomatisasi untuk Anda.
+
+Berikut adalah file panduan lengkapnya:
+
+Your PDF file is ready
+PDF icon
+ Panduan_In..._Pengaduan 
+PDF
+
+Apa yang ada di dalam file ini?
+Struktur Kolom Baru: Rekomendasi urutan kolom di Google Sheets Anda agar sinkron dengan web.
+
+Google Apps Script: Kode "jembatan" yang perlu Anda tempelkan di Google Sheets. Skrip ini berfungsi agar setiap kali Guru menekan tombol "Kirim Laporan" di web, datanya otomatis masuk ke baris Spreadsheet Anda secara real-time.
+
+Gambaran Alur Kerja: Penjelasan singkat cara menyambungkan web statis dengan database Spreadsheet.
+
+Langkah selanjutnya:
+Apakah Anda ingin saya membuatkan file HTML + CSS (Tailwind) utuh yang sudah menggabungkan Dashboard Admin dan Form Input Guru ke dalam satu file agar bisa Anda coba jalankan di browser?
+
+iya. saya akan menggunakan github untuk menyimpan kode saya, spreadsheet sebagai database dan deploy menggunakan cloudflare untuk halaman statis saya
+
+Pilihan yang sangat tepat dan profesional! Menggunakan GitHub, Cloudflare Pages, dan Google Sheets adalah kombinasi stack teknologi yang sangat efisien: gratis, cepat, dan mudah dipantau.
+
+Saya telah menyatukan desain Dashboard Admin dan Form Input Guru ke dalam satu file HTML yang responsif dan siap dideploy.
+
+Cara Menggunakan File Ini:
+Download File: Klik file index.html yang saya sertakan di bawah.
+
+Upload ke GitHub: Buat repository baru di GitHub, lalu unggah file index.html ini ke sana.
+
+Deploy ke Cloudflare: Hubungkan repository GitHub tersebut ke Cloudflare Pages. Dalam hitungan menit, web Anda sudah bisa diakses online oleh seluruh guru.
+
+Fitur yang Sudah Saya Siapkan:
+Dual View: Terdapat navigasi untuk berpindah antara halaman laporan (untuk Guru) dan Dashboard (untuk Anda sebagai Admin).
+
+Detail Lokasi: Form sudah memiliki input untuk Gedung, Lantai, dan Nama Ruangan.
+
+Desain Modern: Menggunakan font Plus Jakarta Sans dan palet warna Candy Pop (Indigo & Purple) yang bersih dan profesional.
+
+Responsif: Tampilan otomatis menyesuaikan jika dibuka dari laptop maupun HP.
+
+Your HTML file is ready
+HTML icon
+ index 
+HTML
+
+Apa yang harus dilakukan selanjutnya?
+Agar form "Kirim Laporan" benar-benar mengirim data ke Spreadsheet Anda, Anda perlu menambahkan skrip fetch() di bagian akhir file HTML tersebut (tepat di bawah fungsi switchTab).
+
+Skrip tersebut akan diarahkan ke URL Web App dari Google Apps Script yang kodenya sudah saya berikan di panduan PDF sebelumnya.
+
+Apakah Anda ingin saya membantu menuliskan bagian kode JavaScript fetch() tersebut sekarang agar pengiriman datanya langsung aktif?
+
+
+
+
+
+
+Gemini is AI and can make mistakes.
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Pengaduan Sarpras Sekolah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .candy-gradient { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen">
+
+    <!-- Header / Navbar -->
+    <nav class="candy-gradient shadow-lg text-white p-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-school-flag text-2xl"></i>
+                <span class="font-bold text-lg tracking-tight">SarprasCare v1.0</span>
+            </div>
+            <div class="flex space-x-2">
+                <button onclick="switchTab('admin')" class="bg-white/20 hover:bg-white/40 px-4 py-2 rounded-lg text-sm font-semibold transition">Admin Dashboard</button>
+                <button onclick="switchTab('input')" class="bg-white px-4 py-2 rounded-lg text-indigo-600 text-sm font-bold shadow-sm transition">Buat Laporan</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Tab 1: Form Input Guru -->
+    <div id="tab-input" class="container mx-auto p-6 max-w-2xl mt-4">
+        <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
+            <div class="bg-indigo-50 p-6 border-b border-indigo-100">
+                <h2 class="text-2xl font-bold text-slate-800">Lapor Kerusakan</h2>
+                <p class="text-slate-500 text-sm">Gunakan form ini untuk melaporkan fasilitas sekolah yang bermasalah.</p>
+            </div>
+            <form class="p-8 space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Kategori Barang</label>
+                        <select class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
+                            <option>AC</option>
+                            <option>LCD Projector</option>
+                            <option>Sarana Umum</option>
+                            <option>Lain-lain</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Kampus</label>
+                        <select class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
+                            <option>Kampus 1</option>
+                            <option>Kampus 2</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="md:col-span-1">
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Gedung</label>
+                        <input type="text" placeholder="Gedung A" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div class="md:col-span-1">
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Lantai</label>
+                        <select class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500">
+                            <option>Lantai 1</option>
+                            <option>Lantai 2</option>
+                            <option>Lantai 3</option>
+                        </select>
+                    </div>
+                    <div class="md:col-span-1">
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Nama Ruangan</label>
+                        <input type="text" placeholder="XII TKJ 1" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Deskripsi Kerusakan</label>
+                    <textarea rows="4" placeholder="Jelaskan detail kerusakannya di sini..." class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+                </div>
+
+                <button type="submit" class="w-full candy-gradient text-white font-bold py-4 rounded-2xl shadow-lg hover:opacity-90 transition transform hover:-translate-y-1">
+                    Kirim Laporan
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tab 2: Dashboard Admin -->
+    <div id="tab-admin" class="container mx-auto p-6 hidden">
+        <!-- Stats Summary -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Total Laporan</p>
+                <p class="text-3xl font-bold text-slate-800">24</p>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-rose-500">
+                <p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Belum Dikerjakan</p>
+                <p class="text-3xl font-bold text-rose-600">08</p>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-amber-400">
+                <p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Proses</p>
+                <p class="text-3xl font-bold text-amber-600">03</p>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-emerald-500">
+                <p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Selesai</p>
+                <p class="text-3xl font-bold text-emerald-600">13</p>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 mb-6 flex items-center justify-between">
+            <div class="flex space-x-2">
+                <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium">Semua</button>
+                <button class="bg-slate-50 text-slate-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-100">AC</button>
+                <button class="bg-slate-50 text-slate-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-100">LCD</button>
+            </div>
+            <div class="relative">
+                <i class="fas fa-search absolute left-3 top-3 text-slate-400 text-sm"></i>
+                <input type="text" placeholder="Cari ruangan..." class="pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-indigo-500">
+            </div>
+        </div>
+
+        <!-- Table Data -->
+        <div class="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="bg-slate-50 text-slate-500 text-xs font-bold uppercase border-b border-slate-100">
+                            <th class="px-6 py-4">Item & Lokasi</th>
+                            <th class="px-6 py-4">Keluhan</th>
+                            <th class="px-6 py-4">Status</th>
+                            <th class="px-6 py-4 text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-50">
+                        <tr>
+                            <td class="px-6 py-4">
+                                <span class="block font-bold text-slate-800">AC Belakang</span>
+                                <span class="text-xs text-slate-500">Gedung B • Lantai 2 • Ruang Guru</span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <p class="text-sm text-slate-600 italic leading-relaxed">"Tidak dingin meskipun suhu 16 derajat"</p>
+                                <span class="text-[10px] text-slate-400 italic">Dilaporkan: 12 Menit lalu</span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="bg-rose-100 text-rose-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase">Belum</span>
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <button class="text-indigo-600 bg-indigo-50 hover:bg-indigo-600 hover:text-white px-3 py-1.5 rounded-lg text-xs font-bold transition">Update</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4">
+                                <span class="block font-bold text-slate-800">LCD Projector</span>
+                                <span class="text-xs text-slate-500">Gedung A • Lantai 1 • XII MIPA 4</span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <p class="text-sm text-slate-600 italic">"Lampu indikator merah berkedip"</p>
+                                <span class="text-[10px] text-slate-400 italic">Dilaporkan: Kemarin</span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase">Proses</span>
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <button class="text-indigo-600 bg-indigo-50 hover:bg-indigo-600 hover:text-white px-3 py-1.5 rounded-lg text-xs font-bold transition">Update</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            const inputTab = document.getElementById('tab-input');
+            const adminTab = document.getElementById('tab-admin');
+            
+            if (tab === 'input') {
+                inputTab.classList.remove('hidden');
+                adminTab.classList.add('hidden');
+            } else {
+                adminTab.classList.remove('hidden');
+                inputTab.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
+index.html
+Displaying index.html.
