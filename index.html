@@ -1,93 +1,35 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Pengaduan Sarana Sekolah</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-</head>
-<body class="bg-gray-50 font-sans">
-
-    <nav class="bg-indigo-600 p-4 text-white shadow-lg">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-xl font-bold tracking-tight"><i class="fas fa-tools mr-2"></i> SARPRAS CARE</h1>
-            <div class="space-x-4">
-                <button class="bg-white text-indigo-600 px-4 py-2 rounded-lg font-medium text-sm hover:bg-indigo-50 transition">
-                    <i class="fas fa-plus mr-1"></i> Lapor Baru
-                </button>
-            </div>
-        </div>
-    </nav>
-
-    <main class="container mx-auto p-4 md:p-8">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-red-500">
-                <p class="text-gray-500 text-sm font-medium">Belum Dikerjakan</p>
-                <h2 class="text-3xl font-bold text-gray-800">08</h2>
-            </div>
-            <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-yellow-500">
-                <p class="text-gray-500 text-sm font-medium">Proses Reparasi</p>
-                <h2 class="text-3xl font-bold text-gray-800">03</h2>
-            </div>
-            <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-green-500">
-                <p class="text-gray-500 text-sm font-medium">Selesai</p>
-                <h2 class="text-3xl font-bold text-gray-800">12</h2>
-            </div>
-        </div>
-
-        <div class="flex space-x-2 mb-6 overflow-x-auto pb-2">
-            <button class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap">Semua Kategori</button>
-            <button class="bg-white border text-gray-600 px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-50 whitespace-nowrap">AC</button>
-            <button class="bg-white border text-gray-600 px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-50 whitespace-nowrap">LCD Projector</button>
-            <button class="bg-white border text-gray-600 px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-50 whitespace-nowrap">Fasilitas Umum</button>
-        </div>
-
-        <div class="bg-white rounded-2xl shadow-sm overflow-hidden border">
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                    <thead class="bg-gray-50 text-gray-600 uppercase text-xs font-bold">
-                        <tr>
-                            <th class="px-6 py-4">Item / Lokasi</th>
-                            <th class="px-6 py-4">Keluhan</th>
-                            <th class="px-6 py-4">Waktu Lapor</th>
-                            <th class="px-6 py-4">Status</th>
-                            <th class="px-6 py-4 text-center">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-100">
-                        <tr class="hover:bg-gray-50 transition">
-                            <td class="px-6 py-4">
-                                <span class="block font-bold text-gray-800">AC Depan - XII 7</span>
-                                <span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded">Kampus 2</span>
-                            </td>
-                            <td class="px-6 py-4 text-sm text-gray-600 italic">"Bocor air merembes ke tembok"</td>
-                            <td class="px-6 py-4 text-sm text-gray-500">14 Jan 2026</td>
-                            <td class="px-6 py-4">
-                                <span class="bg-green-100 text-green-700 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Selesai</span>
-                            </td>
-                            <td class="px-6 py-4 text-center">
-                                <button class="text-indigo-600 hover:text-indigo-900 font-medium text-sm">Detail</button>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-gray-50 transition">
-                            <td class="px-6 py-4">
-                                <span class="block font-bold text-gray-800">LCD - XI 10</span>
-                                <span class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded">Kampus 1</span>
-                            </td>
-                            <td class="px-6 py-4 text-sm text-gray-600 italic">"Warna tampilan menguning"</td>
-                            <td class="px-6 py-4 text-sm text-gray-500">15 Jan 2026</td>
-                            <td class="px-6 py-4">
-                                <span class="bg-red-100 text-red-700 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Belum</span>
-                            </td>
-                            <td class="px-6 py-4 text-center">
-                                <button class="text-indigo-600 hover:text-indigo-900 font-medium text-sm">Update</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </main>
-</body>
-</html>
+<div class="bg-white rounded-2xl shadow-sm overflow-hidden border">
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead class="bg-gray-100 text-gray-600 uppercase text-xs font-bold">
+                <tr>
+                    <th class="px-6 py-4">Item / Kategori</th>
+                    <th class="px-6 py-4">Lokasi Detail</th> <th class="px-6 py-4">Keluhan</th>
+                    <th class="px-6 py-4 text-center">Status</th>
+                    <th class="px-6 py-4 text-center">Aksi</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                <tr class="hover:bg-gray-50 transition">
+                    <td class="px-6 py-4">
+                        <span class="block font-bold text-gray-800">AC Belakang</span>
+                        <span class="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded uppercase font-bold">Kategori: AC</span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="text-sm font-semibold text-gray-800 italic">Ruang Guru</div>
+                        <div class="text-xs text-gray-500">Kampus 1 • Gedung A • Lantai 2</div>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-600 italic font-light">"Bunyi berisik dan tidak dingin"</td>
+                    <td class="px-6 py-4 text-center">
+                        <span class="bg-yellow-100 text-yellow-700 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase italic">Reparasi</span>
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        <button class="bg-indigo-50 text-indigo-600 hover:bg-indigo-600 hover:text-white p-2 rounded-lg transition">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
