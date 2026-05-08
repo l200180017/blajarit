@@ -10,204 +10,163 @@
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .candy-gradient { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); }
-        .glass { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); }
     </style>
 </head>
-<body class="bg-slate-50 min-h-screen pb-12">
+<body class="bg-slate-50 min-h-screen">
 
-    <!-- Navbar -->
     <nav class="candy-gradient shadow-lg text-white sticky top-0 z-50">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-2">
                 <i class="fas fa-tools text-2xl"></i>
-                <span class="font-bold text-lg tracking-tight uppercase">SarprasCare</span>
+                <span class="font-bold text-lg tracking-tight">SarprasCare</span>
             </div>
-            <div class="hidden md:flex space-x-1">
-                <button onclick="showPage('home')" class="px-4 py-2 rounded-lg hover:bg-white/20 transition">Home</button>
-                <button onclick="showPage('lapor')" class="px-4 py-2 rounded-lg hover:bg-white/20 transition">Buat Laporan</button>
-                <button onclick="showPage('admin')" class="px-4 py-2 rounded-lg hover:bg-white/20 transition">Admin Dashboard</button>
-                <button onclick="showPage('settings')" class="px-4 py-2 rounded-lg hover:bg-white/20 transition"><i class="fas fa-cog"></i></button>
-            </div>
-            <!-- Mobile Menu Icon -->
-            <div class="md:hidden">
-                <i class="fas fa-bars text-xl"></i>
+            <div class="flex space-x-1">
+                <button onclick="showPage('home')" class="px-3 py-1.5 rounded-lg hover:bg-white/20 transition text-sm">Home</button>
+                <button onclick="showPage('lapor')" class="px-3 py-1.5 rounded-lg hover:bg-white/20 transition text-sm">Lapor</button>
+                <button onclick="showPage('admin')" class="px-3 py-1.5 rounded-lg hover:bg-white/20 transition text-sm">Admin</button>
             </div>
         </div>
     </nav>
 
-    <!-- PAGE: HOME (Monitoring) -->
-    <div id="page-home" class="container mx-auto px-4 mt-8 animate-fadeIn">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-blue-500">
-                <p class="text-slate-400 text-xs font-bold uppercase">Laporan Masuk</p>
-                <h3 class="text-3xl font-bold text-slate-800">12</h3>
-            </div>
-            <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-yellow-500">
-                <p class="text-slate-400 text-xs font-bold uppercase">Sedang Diproses</p>
-                <h3 class="text-3xl font-bold text-slate-800">5</h3>
-            </div>
-            <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-green-500">
-                <p class="text-slate-400 text-xs font-bold uppercase">Selesai Perbaikan</p>
-                <h3 class="text-3xl font-bold text-slate-800">28</h3>
-            </div>
-        </div>
-        
+    <!-- PAGE: HOME -->
+    <div id="page-home" class="container mx-auto px-4 mt-8">
+        <h2 class="text-xl font-bold text-slate-800 mb-6">Monitoring Laporan</h2>
         <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-            <div class="p-6 border-b flex justify-between items-center">
-                <h2 class="font-bold text-slate-800">Status Laporan Terkini</h2>
-                <span class="text-xs text-indigo-600 font-semibold cursor-pointer">Lihat Semua <i class="fas fa-arrow-right ml-1"></i></span>
-            </div>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left">
-                    <thead class="bg-slate-50 text-slate-500 text-[10px] uppercase font-bold tracking-widest">
-                        <tr>
-                            <th class="px-6 py-4">Waktu / Item</th>
-                            <th class="px-6 py-4">Lokasi</th>
-                            <th class="px-6 py-4">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-50">
-                        <tr>
-                            <td class="px-6 py-4">
-                                <div class="text-sm font-bold">AC Tidak Dingin</div>
-                                <div class="text-[10px] text-slate-400">10 Mei 2024, 08:30</div>
-                            </td>
-                            <td class="px-6 py-4 text-xs">Kampus 1 • Gedung A • R. Guru</td>
-                            <td class="px-6 py-4"><span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-[9px] font-bold uppercase italic">Diproses</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <table class="w-full text-left">
+                <thead class="bg-slate-50 text-slate-500 text-[10px] uppercase font-bold tracking-widest">
+                    <tr><th class="px-6 py-4">Item</th><th class="px-6 py-4">Lokasi</th><th class="px-6 py-4">Status</th></tr>
+                </thead>
+                <tbody id="homeTableBody" class="divide-y divide-slate-50 text-sm">
+                    <tr><td colspan="3" class="px-6 py-8 text-center text-slate-400 italic">Memuat data...</td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
-    <!-- PAGE: LAPOR (Form v2.0) -->
-    <div id="page-lapor" class="hidden container mx-auto px-4 max-w-2xl mt-8">
+    <!-- PAGE: LAPOR -->
+    <div id="page-lapor" class="hidden container mx-auto px-4 max-w-2xl mt-8 pb-10">
         <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
-            <div class="candy-gradient p-8 text-white">
-                <h2 class="text-2xl font-bold">Buat Laporan Baru</h2>
-                <p class="text-white/80 text-sm">Berikan detail lengkap agar segera ditangani.</p>
+            <div class="candy-gradient p-6 text-white text-center">
+                <h2 class="text-xl font-bold">Form Pengaduan Kerusakan</h2>
             </div>
             <form id="formLapor" class="p-8 space-y-6">
-                <!-- Kategori & Custom Field -->
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-2">Kategori Fasilitas</label>
                     <select id="kategori" name="kategori" onchange="toggleLainnya()" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500">
-                        <option value="AC">AC (Pendingin Ruangan)</option>
+                        <option value="AC">AC</option>
                         <option value="LCD">LCD Projector</option>
-                        <option value="Umum">Sarana Umum (Lainnya)</option>
+                        <option value="Umum">Sarana Umum</option>
                     </select>
                 </div>
                 <div id="fieldLainnya" class="hidden">
                     <label class="block text-sm font-semibold text-slate-700 mb-2">Sebutkan Sarana Umum</label>
-                    <input type="text" name="item_khusus" placeholder="Misal: Pintu Kelas, Keran Air..." class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500">
+                    <input type="text" name="item_khusus" placeholder="Misal: Meja, Kursi, Pintu..." class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl">
                 </div>
-
-                <!-- Dropdown Dinamis Lokasi -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 mb-2">Gedung</label>
-                        <select name="gedung" id="selectGedung" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500">
-                            <option value="">-- Pilih Gedung --</option>
-                            <option value="Gedung A">Gedung A (Utama)</option>
-                            <option value="Gedung B">Gedung B (Lab)</option>
-                        </select>
+                        <select name="gedung" id="selectGedung" required class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl"></select>
                     </div>
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 mb-2">Lantai</label>
-                        <select name="lantai" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500">
+                        <select name="lantai" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl">
                             <option>1</option><option>2</option><option>3</option>
                         </select>
                     </div>
                 </div>
                 <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">Nama Ruangan / Kelas</label>
-                    <select name="ruangan" id="selectRuangan" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500">
-                        <option value="">-- Pilih Ruangan --</option>
-                        <option>X MIPA 1</option>
-                        <option>R. Guru</option>
-                    </select>
-                </div>
-
-                <!-- Keluhan & Foto -->
-                <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">Deskripsi Kerusakan</label>
-                    <textarea name="keluhan" rows="4" placeholder="Detail: Bunyi berisik, Mati total, dll..." required class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Nama Ruangan</label>
+                    <select name="ruangan" id="selectRuangan" required class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl"></select>
                 </div>
                 <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">Upload Foto Bukti</label>
-                    <input type="file" id="fileFoto" accept="image/*" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Keluhan</label>
+                    <textarea name="keluhan" rows="3" required class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl"></textarea>
                 </div>
-
-                <button type="submit" class="w-full candy-gradient text-white font-bold py-4 rounded-2xl shadow-lg hover:scale-[1.02] transition">Kirim Laporan</button>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Foto Bukti</label>
+                    <input type="file" id="fileFoto" accept="image/*" class="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:bg-indigo-50 file:text-indigo-700 file:border-0 font-semibold">
+                </div>
+                <button type="submit" id="btnSubmit" class="w-full candy-gradient text-white font-bold py-4 rounded-2xl shadow-lg transition">Kirim Laporan</button>
             </form>
         </div>
     </div>
 
-    <!-- PAGE: ADMIN DASHBOARD (Update Status) -->
+    <!-- PAGE: ADMIN -->
     <div id="page-admin" class="hidden container mx-auto px-4 mt-8">
-        <h2 class="text-2xl font-bold text-slate-800 mb-6">Manajemen Laporan (Admin)</h2>
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-            <div class="overflow-x-auto">
-                <table class="w-full text-left">
-                    <thead class="bg-slate-50 text-slate-500 text-[10px] uppercase font-bold tracking-widest">
-                        <tr>
-                            <th class="px-6 py-4">Pelapor</th>
-                            <th class="px-6 py-4">Item & Kerusakan</th>
-                            <th class="px-6 py-4">Lokasi</th>
-                            <th class="px-6 py-4">Status Saat Ini</th>
-                            <th class="px-6 py-4 text-center">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="adminTable" class="divide-y divide-slate-50">
-                        <!-- Data akan di-load via API -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL UPDATE STATUS -->
-    <div id="modalUpdate" class="fixed inset-0 bg-slate-900/50 hidden flex items-center justify-center p-4 z-[60]">
-        <div class="bg-white w-full max-w-md rounded-3xl p-8 shadow-2xl">
-            <h3 class="text-xl font-bold mb-4">Update Status Perbaikan</h3>
-            <div class="space-y-4">
-                <label class="block text-sm font-medium">Pilih Status Baru:</label>
-                <select id="newStatus" class="w-full p-3 bg-slate-50 border rounded-xl outline-none">
-                    <option value="Baru">Laporan Baru (Diterima)</option>
-                    <option value="Proses">Sedang Diperbaiki (Teknisi)</option>
-                    <option value="Selesai">Selesai Perbaikan</option>
-                </select>
-                <div class="flex space-x-3 mt-6">
-                    <button onclick="closeModal()" class="flex-1 py-3 bg-slate-100 rounded-xl font-bold">Batal</button>
-                    <button onclick="saveStatus()" class="flex-1 py-3 candy-gradient text-white rounded-xl font-bold">Simpan Perubahan</button>
-                </div>
-            </div>
+        <h2 class="text-xl font-bold text-slate-800 mb-6 font-bold uppercase tracking-tight">Admin Dashboard</h2>
+        <div id="adminContainer" class="space-y-4">
+            <!-- Cards of reports for easy update -->
         </div>
     </div>
 
     <script>
-        const SCRIPT_URL = "URL_GOOGLE_APPS_SCRIPT_ANDA";
+        const SCRIPT_URL = 'URL_WEB_APP_ANDA';
 
-        function showPage(pageId) {
-            ['home', 'lapor', 'admin', 'settings'].forEach(id => {
-                document.getElementById('page-' + id)?.classList.add('hidden');
-            });
-            document.getElementById('page-' + pageId).classList.remove('hidden');
+        function showPage(p) {
+            ['home', 'lapor', 'admin'].forEach(id => document.getElementById('page-'+id).classList.toggle('hidden', id !== p));
+            if (p === 'home') loadHomeData();
+            if (p === 'admin') loadAdminData();
         }
 
         function toggleLainnya() {
-            const kat = document.getElementById('kategori').value;
-            document.getElementById('fieldLainnya').classList.toggle('hidden', kat !== 'Umum');
+            document.getElementById('fieldLainnya').classList.toggle('hidden', document.getElementById('kategori').value !== 'Umum');
         }
 
-        function closeModal() { document.getElementById('modalUpdate').classList.add('hidden'); }
+        async function initForm() {
+            const res = await fetch(SCRIPT_URL + '?action=getSettings');
+            const settings = await res.json();
+            const gSel = document.getElementById('selectGedung');
+            const rSel = document.getElementById('selectRuangan');
+            
+            settings.gedung.forEach(g => gSel.add(new Option(g, g)));
+            settings.ruangan.forEach(r => rSel.add(new Option(r, r)));
+        }
 
-        // Script untuk handle upload foto & form (Preview saja)
-        document.getElementById('formLapor').onsubmit = function(e) {
+        document.getElementById('formLapor').onsubmit = async function(e) {
             e.preventDefault();
-            alert("Laporan akan dikirim beserta foto ke Google Sheets & Drive...");
+            const btn = document.getElementById('btnSubmit');
+            btn.disabled = true; btn.innerText = "Mengunggah...";
+
+            const file = document.getElementById('fileFoto').files[0];
+            let fileData = null;
+            if (file) {
+                const reader = new FileReader();
+                fileData = await new Promise(resolve => {
+                    reader.onload = e => resolve({
+                        base64: e.target.result.split(',')[1],
+                        type: file.type,
+                        name: file.name
+                    });
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            const payload = {
+                action: 'addLaporan',
+                kategori: this.kategori.value,
+                item_khusus: this.item_khusus?.value || '',
+                gedung: this.gedung.value,
+                lantai: this.lantai.value,
+                ruangan: this.ruangan.value,
+                keluhan: this.keluhan.value,
+                file: fileData
+            };
+
+            await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+            alert("Laporan Terkirim!");
+            this.reset(); btn.disabled = false; btn.innerText = "Kirim Laporan";
         };
+
+        async function loadHomeData() {
+            const res = await fetch(SCRIPT_URL + '?action=getLaporan');
+            const data = await res.json();
+            const body = document.getElementById('homeTableBody');
+            body.innerHTML = data.map(d => `<tr><td class="px-6 py-4"><b>${d.item}</b></td><td class="px-6 py-4">${d.lokasi}</td><td class="px-6 py-4"><span class="px-2 py-1 bg-slate-100 rounded text-[10px] font-bold">${d.status}</span></td></tr>`).join('');
+        }
+
+        // Initialize
+        initForm();
+        showPage('home');
     </script>
 </body>
 </html>
