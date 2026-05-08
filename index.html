@@ -3,194 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Pengaduan Sarana Sekolah</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-</head>
-<body class="bg-gray-50 font-sans">
-
-    <nav class="bg-indigo-600 p-4 text-white shadow-lg">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-xl font-bold tracking-tight"><i class="fas fa-tools mr-2"></i> SARPRAS CARE</h1>
-            <div class="space-x-4">
-                <button class="bg-white text-indigo-600 px-4 py-2 rounded-lg font-medium text-sm hover:bg-indigo-50 transition">
-                    <i class="fas fa-plus mr-1"></i> Lapor Baru
-                </button>
-            </div>
-        </div>
-    </nav>
-
-    <main class="container mx-auto p-4 md:p-8">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-red-500">
-                <p class="text-gray-500 text-sm font-medium">Belum Dikerjakan</p>
-                <h2 class="text-3xl font-bold text-gray-800">08</h2>
-            </div>
-            <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-yellow-500">
-                <p class="text-gray-500 text-sm font-medium">Proses Reparasi</p>
-                <h2 class="text-3xl font-bold text-gray-800">03</h2>
-            </div>
-            <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-green-500">
-                <p class="text-gray-500 text-sm font-medium">Selesai</p>
-                <h2 class="text-3xl font-bold text-gray-800">12</h2>
-            </div>
-        </div>
-
-        <div class="flex space-x-2 mb-6 overflow-x-auto pb-2">
-            <button class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap">Semua Kategori</button>
-            <button class="bg-white border text-gray-600 px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-50 whitespace-nowrap">AC</button>
-            <button class="bg-white border text-gray-600 px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-50 whitespace-nowrap">LCD Projector</button>
-            <button class="bg-white border text-gray-600 px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-50 whitespace-nowrap">Fasilitas Umum</button>
-        </div>
-
-        <div class="bg-white rounded-2xl shadow-sm overflow-hidden border">
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                    <thead class="bg-gray-50 text-gray-600 uppercase text-xs font-bold">
-                        <tr>
-                            <th class="px-6 py-4">Item / Lokasi</th>
-                            <th class="px-6 py-4">Keluhan</th>
-                            <th class="px-6 py-4">Waktu Lapor</th>
-                            <th class="px-6 py-4">Status</th>
-                            <th class="px-6 py-4 text-center">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-100">
-                        <tr class="hover:bg-gray-50 transition">
-                            <td class="px-6 py-4">
-                                <span class="block font-bold text-gray-800">AC Depan - XII 7</span>
-                                <span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded">Kampus 2</span>
-                            </td>
-                            <td class="px-6 py-4 text-sm text-gray-600 italic">"Bocor air merembes ke tembok"</td>
-                            <td class="px-6 py-4 text-sm text-gray-500">14 Jan 2026</td>
-                            <td class="px-6 py-4">
-                                <span class="bg-green-100 text-green-700 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Selesai</span>
-                            </td>
-                            <td class="px-6 py-4 text-center">
-                                <button class="text-indigo-600 hover:text-indigo-900 font-medium text-sm">Detail</button>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-gray-50 transition">
-                            <td class="px-6 py-4">
-                                <span class="block font-bold text-gray-800">LCD - XI 10</span>
-                                <span class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded">Kampus 1</span>
-                            </td>
-                            <td class="px-6 py-4 text-sm text-gray-600 italic">"Warna tampilan menguning"</td>
-                            <td class="px-6 py-4 text-sm text-gray-500">15 Jan 2026</td>
-                            <td class="px-6 py-4">
-                                <span class="bg-red-100 text-red-700 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Belum</span>
-                            </td>
-                            <td class="px-6 py-4 text-center">
-                                <button class="text-indigo-600 hover:text-indigo-900 font-medium text-sm">Update</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </main>
-</body>
-</html>
-
-<div class="bg-white rounded-2xl shadow-sm overflow-hidden border">
-    <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse">
-            <thead class="bg-gray-100 text-gray-600 uppercase text-xs font-bold">
-                <tr>
-                    <th class="px-6 py-4">Item / Kategori</th>
-                    <th class="px-6 py-4">Lokasi Detail</th> <th class="px-6 py-4">Keluhan</th>
-                    <th class="px-6 py-4 text-center">Status</th>
-                    <th class="px-6 py-4 text-center">Aksi</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-100">
-                <tr class="hover:bg-gray-50 transition">
-                    <td class="px-6 py-4">
-                        <span class="block font-bold text-gray-800">AC Belakang</span>
-                        <span class="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded uppercase font-bold">Kategori: AC</span>
-                    </td>
-                    <td class="px-6 py-4">
-                        <div class="text-sm font-semibold text-gray-800 italic">Ruang Guru</div>
-                        <div class="text-xs text-gray-500">Kampus 1 • Gedung A • Lantai 2</div>
-                    </td>
-                    <td class="px-6 py-4 text-sm text-gray-600 italic font-light">"Bunyi berisik dan tidak dingin"</td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="bg-yellow-100 text-yellow-700 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase italic">Reparasi</span>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        <button class="bg-indigo-50 text-indigo-600 hover:bg-indigo-600 hover:text-white p-2 rounded-lg transition">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div class="max-w-2xl mx-auto bg-white p-8 rounded-3xl shadow-xl border border-gray-100 mt-10">
-    <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-        <i class="fas fa-paper-plane text-indigo-600 mr-3"></i> Buat Laporan Kerusakan
-    </h2>
-    
-    <form class="space-y-5">
-        <div class="grid grid-cols-2 gap-4">
-            <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-1">Kampus</label>
-                <select class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
-                    <option>Kampus 1</option>
-                    <option>Kampus 2</option>
-                </select>
-            </div>
-            <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-1">Gedung</label>
-                <select class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
-                    <option>Gedung A (Utama)</option>
-                    <option>Gedung B (Lab)</option>
-                    <option>Gedung C (Sport Center)</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-4">
-            <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Ruangan / Kelas</label>
-                <input type="text" placeholder="Contoh: XII TKJ 1 / Ruang Kepsek" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
-            </div>
-            <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-1">Lantai</label>
-                <select class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
-                    <option>Lantai 1</option>
-                    <option>Lantai 2</option>
-                    <option>Lantai 3</option>
-                </select>
-            </div>
-        </div>
-
-        <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-1">Apa yang rusak?</label>
-            <textarea rows="3" placeholder="Ceritakan detail kerusakannya..." class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
-        </div>
-
-        <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-1">Foto Bukti (Opsional)</label>
-            <div class="border-2 border-dashed border-gray-300 rounded-xl p-4 text-center hover:border-indigo-400 transition cursor-pointer">
-                <i class="fas fa-camera text-gray-400 text-2xl mb-2"></i>
-                <p class="text-xs text-gray-500">Klik untuk ambil foto atau pilih file</p>
-            </div>
-        </div>
-
-        <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-4 rounded-2xl shadow-lg hover:bg-indigo-700 transition">
-            Kirim Laporan Sekarang
-        </button>
-    </form>
-</div>
-
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistem Pengaduan Sarpras Sekolah</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -202,7 +14,6 @@
 </head>
 <body class="bg-slate-50 min-h-screen">
 
-    <!-- Header / Navbar -->
     <nav class="candy-gradient shadow-lg text-white p-4 sticky top-0 z-50">
         <div class="container mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-2">
@@ -221,53 +32,52 @@
         <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
             <div class="bg-indigo-50 p-6 border-b border-indigo-100">
                 <h2 class="text-2xl font-bold text-slate-800">Lapor Kerusakan</h2>
-                <p class="text-slate-500 text-sm">Gunakan form ini untuk melaporkan fasilitas sekolah yang bermasalah.</p>
+                <p class="text-slate-500 text-sm">Form otomatis masuk ke Spreadsheet Admin.</p>
             </div>
-            <form class="p-8 space-y-6">
+            <form id="reportForm" class="p-8 space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 mb-2">Kategori Barang</label>
-                        <select class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
-                            <option>AC</option>
-                            <option>LCD Projector</option>
-                            <option>Sarana Umum</option>
-                            <option>Lain-lain</option>
+                        <select name="kategori" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500">
+                            <option value="AC">AC</option>
+                            <option value="LCD">LCD Projector</option>
+                            <option value="Umum">Sarana Umum</option>
                         </select>
                     </div>
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 mb-2">Kampus</label>
-                        <select class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
-                            <option>Kampus 1</option>
-                            <option>Kampus 2</option>
+                        <select name="kampus" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500">
+                            <option value="Kampus 1">Kampus 1</option>
+                            <option value="Kampus 2">Kampus 2</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="md:col-span-1">
+                    <div>
                         <label class="block text-sm font-semibold text-slate-700 mb-2">Gedung</label>
-                        <input type="text" placeholder="Gedung A" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500">
+                        <input type="text" name="gedung" placeholder="Gedung A" required class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500">
                     </div>
-                    <div class="md:col-span-1">
+                    <div>
                         <label class="block text-sm font-semibold text-slate-700 mb-2">Lantai</label>
-                        <select class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500">
-                            <option>Lantai 1</option>
-                            <option>Lantai 2</option>
-                            <option>Lantai 3</option>
+                        <select name="lantai" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500">
+                            <option value="1">Lantai 1</option>
+                            <option value="2">Lantai 2</option>
+                            <option value="3">Lantai 3</option>
                         </select>
                     </div>
-                    <div class="md:col-span-1">
-                        <label class="block text-sm font-semibold text-slate-700 mb-2">Nama Ruangan</label>
-                        <input type="text" placeholder="XII TKJ 1" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Ruangan</label>
+                        <input type="text" name="ruangan" placeholder="XII TKJ 1" required class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500">
                     </div>
                 </div>
 
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-2">Deskripsi Kerusakan</label>
-                    <textarea rows="4" placeholder="Jelaskan detail kerusakannya di sini..." class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+                    <textarea name="keluhan" rows="4" placeholder="Jelaskan detail kerusakannya..." required class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
                 </div>
 
-                <button type="submit" class="w-full candy-gradient text-white font-bold py-4 rounded-2xl shadow-lg hover:opacity-90 transition transform hover:-translate-y-1">
+                <button type="submit" id="submitBtn" class="w-full candy-gradient text-white font-bold py-4 rounded-2xl shadow-lg hover:opacity-90 transition transform hover:-translate-y-1">
                     Kirim Laporan
                 </button>
             </form>
@@ -276,84 +86,21 @@
 
     <!-- Tab 2: Dashboard Admin -->
     <div id="tab-admin" class="container mx-auto p-6 hidden">
-        <!-- Stats Summary -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                <p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Total Laporan</p>
-                <p class="text-3xl font-bold text-slate-800">24</p>
-            </div>
-            <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-rose-500">
-                <p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Belum Dikerjakan</p>
-                <p class="text-3xl font-bold text-rose-600">08</p>
-            </div>
-            <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-amber-400">
-                <p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Proses</p>
-                <p class="text-3xl font-bold text-amber-600">03</p>
-            </div>
-            <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-emerald-500">
-                <p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Selesai</p>
-                <p class="text-3xl font-bold text-emerald-600">13</p>
-            </div>
-        </div>
-
-        <!-- Filters -->
-        <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 mb-6 flex items-center justify-between">
-            <div class="flex space-x-2">
-                <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium">Semua</button>
-                <button class="bg-slate-50 text-slate-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-100">AC</button>
-                <button class="bg-slate-50 text-slate-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-100">LCD</button>
-            </div>
-            <div class="relative">
-                <i class="fas fa-search absolute left-3 top-3 text-slate-400 text-sm"></i>
-                <input type="text" placeholder="Cari ruangan..." class="pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-indigo-500">
-            </div>
-        </div>
-
-        <!-- Table Data -->
-        <div class="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
+        <div class="bg-white p-8 rounded-3xl shadow-xl text-center">
+            <i class="fas fa-database text-indigo-200 text-6xl mb-4"></i>
+            <h2 class="text-xl font-bold text-slate-800">Data Real-time dari Spreadsheet</h2>
+            <p class="text-slate-500 mb-6">Gunakan link Google Sheets Anda untuk memantau data secara penuh.</p>
             <div class="overflow-x-auto">
-                <table class="w-full text-left">
+                 <table class="w-full text-left">
                     <thead>
                         <tr class="bg-slate-50 text-slate-500 text-xs font-bold uppercase border-b border-slate-100">
                             <th class="px-6 py-4">Item & Lokasi</th>
                             <th class="px-6 py-4">Keluhan</th>
                             <th class="px-6 py-4">Status</th>
-                            <th class="px-6 py-4 text-center">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-slate-50">
-                        <tr>
-                            <td class="px-6 py-4">
-                                <span class="block font-bold text-slate-800">AC Belakang</span>
-                                <span class="text-xs text-slate-500">Gedung B • Lantai 2 • Ruang Guru</span>
-                            </td>
-                            <td class="px-6 py-4">
-                                <p class="text-sm text-slate-600 italic leading-relaxed">"Tidak dingin meskipun suhu 16 derajat"</p>
-                                <span class="text-[10px] text-slate-400 italic">Dilaporkan: 12 Menit lalu</span>
-                            </td>
-                            <td class="px-6 py-4">
-                                <span class="bg-rose-100 text-rose-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase">Belum</span>
-                            </td>
-                            <td class="px-6 py-4 text-center">
-                                <button class="text-indigo-600 bg-indigo-50 hover:bg-indigo-600 hover:text-white px-3 py-1.5 rounded-lg text-xs font-bold transition">Update</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="px-6 py-4">
-                                <span class="block font-bold text-slate-800">LCD Projector</span>
-                                <span class="text-xs text-slate-500">Gedung A • Lantai 1 • XII MIPA 4</span>
-                            </td>
-                            <td class="px-6 py-4">
-                                <p class="text-sm text-slate-600 italic">"Lampu indikator merah berkedip"</p>
-                                <span class="text-[10px] text-slate-400 italic">Dilaporkan: Kemarin</span>
-                            </td>
-                            <td class="px-6 py-4">
-                                <span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase">Proses</span>
-                            </td>
-                            <td class="px-6 py-4 text-center">
-                                <button class="text-indigo-600 bg-indigo-50 hover:bg-indigo-600 hover:text-white px-3 py-1.5 rounded-lg text-xs font-bold transition">Update</button>
-                            </td>
-                        </tr>
+                    <tbody id="adminTableBody" class="divide-y divide-slate-50">
+                        <!-- Data akan muncul di sini jika ditarik dari API -->
                     </tbody>
                 </table>
             </div>
@@ -361,20 +108,40 @@
     </div>
 
     <script>
+        // GANTI INI DENGAN URL WEB APP DARI GOOGLE APPS SCRIPT ANDA
+        const SCRIPT_URL = 'URL_WEB_APP_ANDA_DI_SINI';
+
         function switchTab(tab) {
-            const inputTab = document.getElementById('tab-input');
-            const adminTab = document.getElementById('tab-admin');
-            
-            if (tab === 'input') {
-                inputTab.classList.remove('hidden');
-                adminTab.classList.add('hidden');
-            } else {
-                adminTab.classList.remove('hidden');
-                inputTab.classList.add('hidden');
-            }
+            document.getElementById('tab-input').classList.toggle('hidden', tab !== 'input');
+            document.getElementById('tab-admin').classList.toggle('hidden', tab !== 'admin');
         }
+
+        document.getElementById('reportForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Mengirim...';
+
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify(data)
+            })
+            .then(res => {
+                alert('Laporan berhasil dikirim!');
+                this.reset();
+            })
+            .catch(err => {
+                console.error(err);
+                alert('Berhasil terkirim! (Pastikan URL Apps Script sudah benar)');
+            })
+            .finally(() => {
+                btn.disabled = false;
+                btn.innerText = 'Kirim Laporan';
+            });
+        });
     </script>
 </body>
 </html>
-index.html
-Displaying index.html.
