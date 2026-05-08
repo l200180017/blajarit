@@ -100,7 +100,7 @@
     </div>
 
     <script>
-        const SCRIPT_URL = 'AKfycbw5DUbYj5IXpXn6RhcidIgWgI7aSr4PUzjJPZFw2ub9L6-DkGREYcBIOZXyEO7lv7Qq1Q';
+        const SCRIPT_URL = 'https://script.google.com/u/5/home/projects/1_BFVQQ2suv2K3GSxrY7bZi1X_DEsgvAu3YilM4apGWaU_YJfiPac8uej/edit';
 
         function showPage(p) {
             ['home', 'lapor', 'admin'].forEach(id => document.getElementById('page-'+id).classList.toggle('hidden', id !== p));
@@ -113,14 +113,30 @@
         }
 
         async function initForm() {
-            const res = await fetch(SCRIPT_URL + '?action=getSettings');
-            const settings = await res.json();
-            const gSel = document.getElementById('selectGedung');
-            const rSel = document.getElementById('selectRuangan');
-            
+    try {
+        // Pastikan SCRIPT_URL sudah benar dan menggunakan HTTPS
+        const res = await fetch(SCRIPT_URL + '?action=getSettings');
+        const settings = await res.json();
+        
+        const gSel = document.getElementById('selectGedung');
+        const rSel = document.getElementById('selectRuangan');
+        
+        // Bersihkan dropdown sebelum mengisi
+        gSel.innerHTML = '<option value="">-- Pilih Gedung --</option>';
+        rSel.innerHTML = '<option value="">-- Pilih Ruangan --</option>';
+        
+        if (settings.gedung && settings.gedung.length > 0) {
             settings.gedung.forEach(g => gSel.add(new Option(g, g)));
+        }
+        
+        if (settings.ruangan && settings.ruangan.length > 0) {
             settings.ruangan.forEach(r => rSel.add(new Option(r, r)));
         }
+        console.log("Dropdown berhasil dimuat");
+    } catch (err) {
+        console.error("Gagal memuat dropdown:", err);
+    }
+}
 
         document.getElementById('formLapor').onsubmit = async function(e) {
             e.preventDefault();
