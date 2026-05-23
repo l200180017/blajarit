@@ -148,10 +148,10 @@
         const fileInput = document.getElementById('fileFoto');
         let fileData = null;
 
+        // JIKA ADA FOTO, KITA KOMPRES DULU DI SINI
         if (fileInput.files.length > 0) {
             const file = fileInput.files[0];
             
-            // FUNGSI KOMPRESI FOTO OTOMATIS SEBELUM DIKIRIM
             const base64Clean = await new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.onload = function(event) {
@@ -161,9 +161,9 @@
                         let width = img.width;
                         let height = img.height;
 
-                        // Batasi resolusi maksimal 1024px agar ukuran file kecil (di bawah 1MB)
-                        const MAX_WIDTH = 1024;
-                        const MAX_HEIGHT = 1024;
+                        // Batasi resolusi maksimal 800px agar file sangat ringan
+                        const MAX_WIDTH = 800;
+                        const MAX_HEIGHT = 800;
 
                         if (width > height) {
                             if (width > MAX_WIDTH) {
@@ -182,8 +182,8 @@
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, width, height);
 
-                        // Kompres kualitas gambar menjadi 60% (JPEG)
-                        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.6);
+                        // Kompres kualitas menjadi 50% (Sangat ringan tapi tetap jelas)
+                        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.5);
                         resolve(compressedBase64.split(',')[1]);
                     };
                     img.src = event.target.result;
@@ -195,12 +195,11 @@
             fileData = { 
                 base64: base64Clean, 
                 type: 'image/jpeg', 
-                name: file.name.replace(/\.[^/.]+$/, "") + ".jpg" 
+                name: 'foto_' + Date.now() + '.jpg' 
             };
         }
 
         const payload = {
-            action: 'addLaporan',
             kategori: this.kategori.value,
             item_khusus: this.item_khusus ? this.item_khusus.value : '',
             gedung: this.gedung.value,
@@ -211,7 +210,7 @@
         };
 
         // Kirim ke Google Apps Script
-        const response = await fetch(SCRIPT_URL, {
+        await fetch(SCRIPT_URL, {
             method: 'POST',
             mode: 'no-cors',
             headers: {
@@ -225,7 +224,7 @@
         showPage('home');
     } catch (error) {
         console.error(error);
-        alert("Terjadi kesalahan saat memproses laporan: " + error.message);
+        alert("Gagal memproses data: " + error.message);
     } finally {
         btn.disabled = false;
         btn.innerText = "Kirim Laporan";
