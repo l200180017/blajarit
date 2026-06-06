@@ -138,67 +138,47 @@
     }
 }
 
-        document.getElementById('formLapor').onsubmit = async function(e) {
+document.getElementById('formLapor').onsubmit = async function(e) {
     e.preventDefault();
     const btn = document.querySelector('button[type="submit"]');
     btn.disabled = true;
-    btn.innerText = "Sedang Mengirim...";
+    btn.innerText = "Sedang Mengirim Laporan...";
 
     try {
         const fileInput = document.getElementById('fileFoto');
-        let fileData = null;
+        let fileUrlResult = "Tidak ada foto"; // Default jika tidak ada foto
 
-        // JIKA ADA FOTO, KITA KOMPRES DULU DI SINI
+        // 1. PROSES UPLOAD FOTO LANGSUNG KE IMGUR (JIKA ADA FOTO)
         if (fileInput.files.length > 0) {
+            btn.innerText = "Sedang Mengupload Gambar...";
             const file = fileInput.files[0];
             
-            const base64Clean = await new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    const img = new Image();
-                    img.onload = function() {
-                        const canvas = document.createElement('canvas');
-                        let width = img.width;
-                        let height = img.height;
+            // Siapkan form data untuk Imgur
+            const formData = new FormData();
+            formData.append('image', file);
 
-                        // Batasi resolusi maksimal 800px agar file sangat ringan
-                        const MAX_WIDTH = 800;
-                        const MAX_HEIGHT = 800;
-
-                        if (width > height) {
-                            if (width > MAX_WIDTH) {
-                                height *= MAX_WIDTH / width;
-                                width = MAX_WIDTH;
-                            }
-                        } else {
-                            if (height > MAX_HEIGHT) {
-                                width *= MAX_HEIGHT / height;
-                                height = MAX_HEIGHT;
-                            }
-                        }
-
-                        canvas.width = width;
-                        canvas.height = height;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, width, height);
-
-                        // Kompres kualitas menjadi 50% (Sangat ringan tapi tetap jelas)
-                        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.5);
-                        resolve(compressedBase64.split(',')[1]);
-                    };
-                    img.src = event.target.result;
-                };
-                reader.onerror = error => reject(error);
-                reader.readAsDataURL(file);
+            // Kirim gambar ke API Imgur (Menggunakan Client ID Anonim)
+            const imgurRes = await fetch('https://api.imgur.com/3/image', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Client-ID 1c809df63158e24' // Client ID cadangan anonim resmi
+                },
+                body: formData
             });
 
-            fileData = { 
-                base64: base64Clean, 
-                type: 'image/jpeg', 
-                name: 'foto_' + Date.now() + '.jpg' 
-            };
+            const imgurData = await imgurRes.json();
+            
+            if (imgurData.success) {
+                fileUrlResult = imgurData.data.link; // Mengambil link pendek gambar dari Imgur
+                console.log("Gambar berhasil di-upload ke Imgur:", fileUrlResult);
+            } else {
+                console.error("Imgur Gagal:", imgurData);
+                throw new Error("Gagal mengupload gambar ke server cloud.");
+            }
         }
 
+        // 2. SIAPKAN DATA RINGAN UNTUK DIKIRIM KE GOOGLE SPREADSHEET
+        btn.innerText = "Mencatat ke Spreadsheet...";
         const payload = {
             kategori: this.kategori.value,
             item_khusus: this.item_khusus ? this.item_khusus.value : '',
@@ -206,7 +186,7 @@
             lantai: this.lantai.value,
             ruangan: this.ruangan.value,
             keluhan: this.keluhan.value,
-            file: fileData
+            fileUrl: fileUrlResult // Yang dikirim sekarang HANYA TEKS LINK PENDEK
         };
 
         // Kirim ke Google Apps Script
@@ -219,12 +199,12 @@
             body: JSON.stringify(payload)
         });
 
-        alert("Laporan berhasil dikirim!");
+        alert("Laporan berhasil dikirim dan tercatat!");
         this.reset();
         showPage('home');
     } catch (error) {
         console.error(error);
-        alert("Gagal memproses data: " + error.message);
+        alert("Terjadi kesalahan: " + error.message);
     } finally {
         btn.disabled = false;
         btn.innerText = "Kirim Laporan";
