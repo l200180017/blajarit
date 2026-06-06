@@ -138,7 +138,7 @@
     }
 }
 
-document.getElementById('formLapor').onsubmit = async function(e) {
+    document.getElementById('formLapor').onsubmit = async function(e) {
     e.preventDefault();
     const btn = document.querySelector('button[type="submit"]');
     btn.disabled = true;
@@ -146,40 +146,62 @@ document.getElementById('formLapor').onsubmit = async function(e) {
 
     try {
         const fileInput = document.getElementById('fileFoto');
-        let fileUrlResult = "Tidak ada foto"; // Default jika tidak ada foto
+        let fileData = null;
 
-        // 1. PROSES UPLOAD FOTO LANGSUNG KE IMGUR (JIKA ADA FOTO)
+        // JIKA PENGGUNA MEMASUKKAN FOTO, KITA KOMPRES DI SINI
         if (fileInput.files.length > 0) {
-            btn.innerText = "Sedang Mengupload Gambar...";
+            btn.innerText = "Sedang Memproses Gambar...";
             const file = fileInput.files[0];
             
-            // Siapkan form data untuk Imgur
-            const formData = new FormData();
-            formData.append('image', file);
+            const base64Clean = await new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        let width = img.width;
+                        let height = img.height;
 
-            // Kirim gambar ke API Imgur (Menggunakan Client ID Anonim)
-            const imgurRes = await fetch('https://api.imgur.com/3/image', {
-                method: 'POST',
-                headers: {
-                    'Authorization': 'Client-ID 1c809df63158e24' // Client ID cadangan anonim resmi
-                },
-                body: formData
+                        // Batasi resolusi maksimal 800px agar file di bawah 500 KB
+                        const MAX_WIDTH = 800;
+                        const MAX_HEIGHT = 800;
+
+                        if (width > height) {
+                            if (width > MAX_WIDTH) {
+                                height *= MAX_WIDTH / width;
+                                width = MAX_WIDTH;
+                            }
+                        } else {
+                            if (height > MAX_HEIGHT) {
+                                width *= MAX_HEIGHT / height;
+                                height = MAX_HEIGHT;
+                            }
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        // Kompres kualitas menjadi 50% (Sangat aman untuk server Google)
+                        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.5);
+                        resolve(compressedBase64.split(',')[1]);
+                    };
+                    img.src = event.target.result;
+                };
+                reader.onerror = error => reject(error);
+                reader.readAsDataURL(file);
             });
 
-            const imgurData = await imgurRes.json();
-            
-            if (imgurData.success) {
-                fileUrlResult = imgurData.data.link; // Mengambil link pendek gambar dari Imgur
-                console.log("Gambar berhasil di-upload ke Imgur:", fileUrlResult);
-            } else {
-                console.error("Imgur Gagal:", imgurData);
-                throw new Error("Gagal mengupload gambar ke server cloud.");
-            }
+            fileData = { 
+                base64: base64Clean, 
+                type: 'image/jpeg', 
+                name: 'sarpras_' + Date.now() + '.jpg' 
+            };
         }
 
-        // 2. SIAPKAN DATA RINGAN UNTUK DIKIRIM KE GOOGLE SPREADSHEET
-        btn.innerText = "Mencatat ke Spreadsheet...";
-        // Bagian pembungkus data sebelum dikirim ke Google
+        // BUNGKUS DATA UNTUK DIKIRIM
+        btn.innerText = "Mengirim ke Google Drive...";
         const payload = {
             kategori: this.kategori.value,
             item_khusus: this.item_khusus ? this.item_khusus.value : '',
@@ -187,11 +209,9 @@ document.getElementById('formLapor').onsubmit = async function(e) {
             lantai: this.lantai.value,
             ruangan: this.ruangan.value,
             keluhan: this.keluhan.value,
-            fileUrl: fileUrlResult, // Ini berisi link dari Imgur (misal: https://i.imgur.com/...)
-            file: fileUrlResult     // Kita kirim dua nama sekaligus agar Apps Script pasti membacanya
+            file: fileData // Dikirim dalam bentuk text base64 yang sudah super ringan
         };
 
-        // Kirim ke Google Apps Script
         await fetch(SCRIPT_URL, {
             method: 'POST',
             mode: 'no-cors',
@@ -201,7 +221,7 @@ document.getElementById('formLapor').onsubmit = async function(e) {
             body: JSON.stringify(payload)
         });
 
-        alert("Laporan berhasil dikirim dan tercatat!");
+        alert("Laporan & Foto Berhasil Tersimpan di Google Drive!");
         this.reset();
         showPage('home');
     } catch (error) {
