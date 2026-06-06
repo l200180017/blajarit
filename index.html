@@ -203,14 +203,15 @@
         // BUNGKUS DATA UNTUK DIKIRIM
         btn.innerText = "Mengirim ke Google Drive...";
         const payload = {
-            kategori: this.kategori.value,
-            item_khusus: this.item_khusus ? this.item_khusus.value : '',
-            gedung: this.gedung.value,
-            lantai: this.lantai.value,
-            ruangan: this.ruangan.value,
-            keluhan: this.keluhan.value,
-            file: fileData // Dikirim dalam bentuk text base64 yang sudah super ringan
-        };
+        action: 'addLaporan',
+        kategori: this.kategori.value,
+        item_khusus: document.getElementById('item_khusus') ? document.getElementById('item_khusus').value : '', // <-- PASTIKAN NAMA PROPERTY-NYA "item_khusus"
+        gedung: this.gedung.value,
+        lantai: this.lantai.value,
+        ruangan: this.ruangan.value,
+        keluhan: this.keluhan.value,
+        file: fileData
+    };
 
         await fetch(SCRIPT_URL, {
             method: 'POST',
