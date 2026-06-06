@@ -179,6 +179,7 @@ document.getElementById('formLapor').onsubmit = async function(e) {
 
         // 2. SIAPKAN DATA RINGAN UNTUK DIKIRIM KE GOOGLE SPREADSHEET
         btn.innerText = "Mencatat ke Spreadsheet...";
+        // Bagian pembungkus data sebelum dikirim ke Google
         const payload = {
             kategori: this.kategori.value,
             item_khusus: this.item_khusus ? this.item_khusus.value : '',
@@ -186,7 +187,8 @@ document.getElementById('formLapor').onsubmit = async function(e) {
             lantai: this.lantai.value,
             ruangan: this.ruangan.value,
             keluhan: this.keluhan.value,
-            fileUrl: fileUrlResult // Yang dikirim sekarang HANYA TEKS LINK PENDEK
+            fileUrl: fileUrlResult, // Ini berisi link dari Imgur (misal: https://i.imgur.com/...)
+            file: fileUrlResult     // Kita kirim dua nama sekaligus agar Apps Script pasti membacanya
         };
 
         // Kirim ke Google Apps Script
